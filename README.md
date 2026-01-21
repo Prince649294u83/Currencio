@@ -83,40 +83,50 @@ This file focuses on **what the project is**, **what it does**, and **how it is 
 Currencio/
 │
 ├── currency-backend/
-│ ├── src/main/java/com/example/currency
-│ │ ├── controller/
-│ │ │ ├── CurrencyController.java
-│ │ │ └── HealthController.java
-│ │ ├── service/
-│ │ │ └── CurrencyService.java
-│ │ ├── client/
-│ │ │ └── ExchangeRateClient.java
-│ │ └── CurrencyApplication.java
-│ └── pom.xml
+│   ├── src/main/java/com/example/currency/
+│   │   ├── controller/
+│   │   │   ├── CurrencyController.java
+│   │   │   └── HealthController.java
+│   │   │
+│   │   ├── service/
+│   │   │   └── CurrencyService.java
+│   │   │
+│   │   ├── client/
+│   │   │   └── ExchangeRateClient.java
+│   │   │
+│   │   └── CurrencyApplication.java
+│   │
+│   └── pom.xml
 │
 ├── currency-frontend/
-│ ├── src/
-│ │ ├── api/
-│ │ │ └── currencyApi.ts
-│ │ ├── components/
-│ │ │ ├── ExchangeRateChart.tsx
-│ │ │ └── LanguageSwitcher.tsx
-│ │ ├── i18n/
-│ │ │ ├── translations.ts
-│ │ │ └── useTranslate.ts
-│ │ ├── pages/
-│ │ │ └── CurrencyConverterPage.tsx
-│ │ ├── styles/
-│ │ │ ├── app.css
-│ │ │ ├── converter.css
-│ │ │ └── theme.css
-│ │ ├── App.tsx
-│ │ └── main.tsx
-│ ├── package.json
-│ └── vite.config.ts
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── currencyApi.ts
+│   │   │
+│   │   ├── components/
+│   │   │   ├── ExchangeRateChart.tsx
+│   │   │   └── LanguageSwitcher.tsx
+│   │   │
+│   │   ├── i18n/
+│   │   │   ├── translations.ts
+│   │   │   └── useTranslate.ts
+│   │   │
+│   │   ├── pages/
+│   │   │   └── CurrencyConverterPage.tsx
+│   │   │
+│   │   ├── styles/
+│   │   │   ├── app.css
+│   │   │   ├── converter.css
+│   │   │   └── theme.css
+│   │   │
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   │
+│   ├── package.json
+│   └── vite.config.ts
 │
-├── RUN_PROJECT.md
-└── README.md
+├── README.md
+└── RUN_PROJECT.md
 
 ---
 
