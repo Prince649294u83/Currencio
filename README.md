@@ -83,18 +83,23 @@ This file focuses on **what the project is**, **what it does**, and **how it is 
 Currencio/
 │
 ├── currency-backend/
-│   ├── src/main/java/com/example/currency/
-│   │   ├── controller/
-│   │   │   ├── CurrencyController.java
-│   │   │   └── HealthController.java
-│   │   │
-│   │   ├── service/
-│   │   │   └── CurrencyService.java
-│   │   │
-│   │   ├── client/
-│   │   │   └── ExchangeRateClient.java
-│   │   │
-│   │   └── CurrencyApplication.java
+│   ├── src/
+│   │   └── main/
+│   │       └── java/
+│   │           └── com/
+│   │               └── example/
+│   │                   └── currency/
+│   │                       ├── controller/
+│   │                       │   ├── CurrencyController.java
+│   │                       │   └── HealthController.java
+│   │                       │
+│   │                       ├── service/
+│   │                       │   └── CurrencyService.java
+│   │                       │
+│   │                       ├── client/
+│   │                       │   └── ExchangeRateClient.java
+│   │                       │
+│   │                       └── CurrencyApplication.java
 │   │
 │   └── pom.xml
 │
@@ -127,6 +132,7 @@ Currencio/
 │
 ├── README.md
 └── RUN_PROJECT.md
+
 
 ---
 
