@@ -1,0 +1,20 @@
+.dashboard-page {
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 32px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    grid-template-rows: auto auto;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.dashboard-grid > div {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}

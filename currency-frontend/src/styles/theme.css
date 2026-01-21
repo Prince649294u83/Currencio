@@ -1,0 +1,36 @@
+/* ===============================
+   THEME VARIABLES
+   =============================== */
+
+/* Light Theme */
+body.light {
+    --bg-page: #f4f6f8;
+    --bg-card: #ffffff;
+    --text-primary: #111111;
+    --text-secondary: #555555;
+    --border-color: #dddddd;
+    --button-bg: #111111;
+    --button-text: #ffffff;
+    --input-bg: #ffffff;
+}
+
+/* Dark Theme */
+body.dark {
+    --bg-page: #0f1115;
+    --bg-card: #1a1d23;
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+    --border-color: #2a2f3a;
+    --button-bg: #ffffff;
+    --button-text: #111111;
+    --input-bg: #1f232b;
+}
+
+/* Global application styling */
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}

@@ -1,0 +1,265 @@
+/* ===============================
+   DASHBOARD GRID
+   =============================== */
+
+.dashboard-wrapper {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 24px;
+    align-items: flex-start;
+    margin-top: 24px;
+}
+
+/* ===============================
+   CARD BASE
+   =============================== */
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+/* ===============================
+   CONVERTER PANEL
+   =============================== */
+
+.converter-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* ===============================
+   FORM GROUP
+   =============================== */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+/* ===============================
+   INPUT + SELECT ROW
+   =============================== */
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 10px;
+}
+
+.input-row input,
+.input-row select {
+    height: 44px;
+    padding: 0 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    width: 100%;
+}
+
+/* Converted amount field */
+.input-row input[readonly] {
+    background: #f4f5f7;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+body.dark .input-row input[readonly] {
+    background: #1f2937;
+}
+
+/* ===============================
+   SWAP BUTTON
+   =============================== */
+
+.swap-circle {
+    align-self: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.swap-circle:hover {
+    background: var(--hover);
+}
+
+/* ===============================
+   RESULT BOX
+   =============================== */
+
+.timestamp-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    font-size: 14px;
+}
+
+.timestamp-box strong {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+/* ===============================
+   PRIMARY BUTTON
+   =============================== */
+
+.primary-button {
+    margin-top: auto;
+    height: 46px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.primary-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ===============================
+   CHART PANEL
+   =============================== */
+
+.chart-panel {
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===============================
+   CHART HEADER
+   =============================== */
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+/* ===============================
+   TIME RANGE SELECTOR
+   =============================== */
+
+.range-selector {
+    display: flex;
+    gap: 6px;
+}
+
+.range-selector button {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.range-selector button.active {
+    background: #4f46e5;
+    color: #fff;
+    border-color: #4f46e5;
+}
+
+/* ===============================
+   HISTORY PANEL
+   =============================== */
+
+.history-panel {
+    grid-column: 1 / -1;
+}
+
+/* ===============================
+   HISTORY TABLE
+   =============================== */
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.history-table th,
+.history-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+}
+
+.history-table th {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.history-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===============================
+   TEXT HELPERS
+   =============================== */
+
+.muted {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.error-text {
+    color: #ef4444;
+    font-size: 14px;
+}
+
+/* ===============================
+   RESPONSIVE
+   =============================== */
+
+@media (max-width: 900px) {
+    .dashboard-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .range-selector {
+        flex-wrap: wrap;
+    }
+}

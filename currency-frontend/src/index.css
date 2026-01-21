@@ -1,0 +1,51 @@
+/* ---------- CSS RESET ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- THEME VARIABLES ---------- */
+body.light {
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --text: #111111;
+  --border: #dddddd;
+  --primary: #2563eb;
+}
+
+body.dark {
+  --bg: #0f172a;
+  --card: #020617;
+  --text: #e5e7eb;
+  --border: #1e293b;
+  --primary: #3b82f6;
+}
+
+/* ---------- GLOBAL ---------- */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ---------- COMMON UI ---------- */
+input,
+select,
+button {
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  padding: 0 12px;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
