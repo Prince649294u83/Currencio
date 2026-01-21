@@ -2,9 +2,9 @@
  * ExchangeRateChart.tsx
  *
  * Dashboard-ready exchange rate chart
- * - Supports time ranges (5D / 1M / 6M / YTD)
+ * - Renders backend-provided time range correctly
  * - Auto-sorts dates
- * - Safe date handling (no mutation bugs)
+ * - No duplicate filtering (backend is source of truth)
  * - Pure presentational component
  */
 
@@ -34,58 +34,13 @@ ChartJS.register(
 
 /* ---------------- TYPES ---------------- */
 
-export type TimeRange = "5D" | "1M" | "6M" | "YTD";
-
 interface ExchangeRateChartProps {
     base: string;
     target: string;
     history: Record<string, number>;
-    range?: TimeRange;
 }
 
 /* ---------------- HELPERS ---------------- */
-
-function getCutoffDate(range: TimeRange): Date {
-    const now = new Date();
-
-    switch (range) {
-        case "5D":
-            return new Date(
-                now.getFullYear(),
-                now.getMonth(),
-                now.getDate() - 5
-            );
-        case "6M":
-            return new Date(
-                now.getFullYear(),
-                now.getMonth() - 6,
-                now.getDate()
-            );
-        case "YTD":
-            return new Date(now.getFullYear(), 0, 1);
-        case "1M":
-        default:
-            return new Date(
-                now.getFullYear(),
-                now.getMonth() - 1,
-                now.getDate()
-            );
-    }
-}
-
-function filterByRange(
-    history: Record<string, number>,
-    range: TimeRange
-) {
-    const cutoff = getCutoffDate(range);
-
-    return Object.entries(history)
-        .sort(
-            ([a], [b]) =>
-                new Date(a).getTime() - new Date(b).getTime()
-        )
-        .filter(([date]) => new Date(date) >= cutoff);
-}
 
 function formatDate(date: string) {
     return new Date(date).toLocaleDateString(undefined, {
@@ -100,11 +55,14 @@ function ExchangeRateChart({
                                base,
                                target,
                                history,
-                               range = "1M",
                            }: ExchangeRateChartProps) {
-    const filtered = filterByRange(history, range);
+    const sorted = Object.entries(history)
+        .sort(
+            ([a], [b]) =>
+                new Date(a).getTime() - new Date(b).getTime()
+        );
 
-    if (filtered.length === 0) {
+    if (sorted.length === 0) {
         return (
             <div
                 style={{
@@ -121,8 +79,8 @@ function ExchangeRateChart({
         );
     }
 
-    const labels = filtered.map(([date]) => formatDate(date));
-    const values = filtered.map(([, value]) => value);
+    const labels = sorted.map(([date]) => formatDate(date));
+    const values = sorted.map(([, value]) => value);
 
     const data = {
         labels,

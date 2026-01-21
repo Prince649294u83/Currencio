@@ -60,39 +60,29 @@ function CurrencyConverterPage() {
             .catch(() => setError(t("errors.loadCurrencies")));
     }, [t]);
 
-    /* ---------- LOAD RATE HISTORY ---------- */
+    /* ---------- LOAD RATE HISTORY (RANGE-AWARE) ---------- */
     useEffect(() => {
-        if (!result) return;
-
         fetchRateHistory(fromCurrency, toCurrency, range)
             .then(setHistory)
             .catch(() => {});
-    }, [range, fromCurrency, toCurrency, result]);
+    }, [fromCurrency, toCurrency, range]);
 
     /* ---------- SWAP ---------- */
-    async function handleSwap() {
-        const f = toCurrency;
-        const tCur = fromCurrency;
-
-        setFromCurrency(f);
-        setToCurrency(tCur);
+    function handleSwap() {
+        setFromCurrency(toCurrency);
+        setToCurrency(fromCurrency);
         setResult(null);
-        setHistory({});
         setError(null);
-
-        if (amount > 0) {
-            await handleConvert(f, tCur);
-        }
     }
 
     /* ---------- CONVERT ---------- */
-    async function handleConvert(from = fromCurrency, to = toCurrency) {
+    async function handleConvert() {
         if (amount <= 0) {
             setError(t("errors.invalidAmount"));
             return;
         }
 
-        if (from === to) {
+        if (fromCurrency === toCurrency) {
             setError(t("errors.sameCurrency"));
             return;
         }
@@ -101,22 +91,23 @@ function CurrencyConverterPage() {
         setError(null);
 
         try {
-            const conversion = await convertCurrency(from, to, amount);
+            const conversion = await convertCurrency(
+                fromCurrency,
+                toCurrency,
+                amount
+            );
             setResult(conversion);
 
             setConversionHistory((prev) => [
                 {
                     time: new Date().toLocaleString(),
-                    from,
-                    to,
+                    from: fromCurrency,
+                    to: toCurrency,
                     amount,
                     converted: conversion.convertedAmount,
                 },
                 ...prev,
             ]);
-
-            const historyData = await fetchRateHistory(from, to, range);
-            setHistory(historyData);
         } catch {
             setError(t("errors.conversionFailed"));
         } finally {
@@ -224,7 +215,7 @@ function CurrencyConverterPage() {
 
                     <button
                         className="primary-button"
-                        onClick={() => handleConvert()}
+                        onClick={handleConvert}
                         disabled={loading}
                     >
                         {loading
@@ -258,62 +249,57 @@ function CurrencyConverterPage() {
                         </div>
                     </div>
 
-                    {Object.keys(history).length > 0 ? (
-                        <ExchangeRateChart
-                            base={fromCurrency}
-                            target={toCurrency}
-                            history={history}
-                        />
-                    ) : (
-                        <p className="muted">{t("labels.noData")}</p>
-                    )}
+                    <ExchangeRateChart
+                        base={fromCurrency}
+                        target={toCurrency}
+                        history={history}
+                        range={range}
+                    />
                 </div>
             </div>
 
             {/* ================= CURRENCY INFO ================= */}
-            {(fromInfo || toInfo) && (
-                <div className="currency-info-grid">
-                    {fromInfo && (
-                        <div className="currency-info-card">
-                            <div className="currency-info-header">
-                                <span className="currency-info-symbol">
-                                    {fromInfo.symbol}
-                                </span>
-                                <span className="currency-info-title">
-                                    {fromInfo.name} ({fromInfo.code})
-                                </span>
-                            </div>
-                            <div className="currency-info-region">
-                                {fromInfo.region}
-                            </div>
-                            <p className="currency-info-description">
-                                {fromInfo.description}
-                            </p>
+            <div className="currency-info-grid">
+                {fromInfo && (
+                    <div className="currency-info-card">
+                        <div className="currency-info-header">
+                            <span className="currency-info-symbol">
+                                {fromInfo.symbol}
+                            </span>
+                            <span className="currency-info-title">
+                                {fromInfo.name} ({fromInfo.code})
+                            </span>
                         </div>
-                    )}
-
-                    {toInfo && (
-                        <div className="currency-info-card">
-                            <div className="currency-info-header">
-                                <span className="currency-info-symbol">
-                                    {toInfo.symbol}
-                                </span>
-                                <span className="currency-info-title">
-                                    {toInfo.name} ({toInfo.code})
-                                </span>
-                            </div>
-                            <div className="currency-info-region">
-                                {toInfo.region}
-                            </div>
-                            <p className="currency-info-description">
-                                {toInfo.description}
-                            </p>
+                        <div className="currency-info-region">
+                            {fromInfo.region}
                         </div>
-                    )}
-                </div>
-            )}
+                        <p className="currency-info-description">
+                            {fromInfo.description}
+                        </p>
+                    </div>
+                )}
 
-            {/* ================= HISTORY TABLE ================= */}
+                {toInfo && (
+                    <div className="currency-info-card">
+                        <div className="currency-info-header">
+                            <span className="currency-info-symbol">
+                                {toInfo.symbol}
+                            </span>
+                            <span className="currency-info-title">
+                                {toInfo.name} ({toInfo.code})
+                            </span>
+                        </div>
+                        <div className="currency-info-region">
+                            {toInfo.region}
+                        </div>
+                        <p className="currency-info-description">
+                            {toInfo.description}
+                        </p>
+                    </div>
+                )}
+            </div>
+
+            {/* ================= CONVERSION HISTORY ================= */}
             {conversionHistory.length > 0 && (
                 <div className="card history-panel">
                     <h2 className="card-title">

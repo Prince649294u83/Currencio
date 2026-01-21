@@ -10,7 +10,9 @@ import java.time.LocalDate;
 /**
  * ExchangeRateClient
  *
- * Uses Frankfurter API (ECB-backed, free, no API key)
+ * Frankfurter API client (ECB-backed)
+ * - Correct date-range handling
+ * - Stable response parsing
  */
 @Component
 public class ExchangeRateClient {
@@ -26,7 +28,7 @@ public class ExchangeRateClient {
     }
 
     /**
-     * Convert currency using Frankfurter API
+     * Convert currency
      */
     public JsonNode convert(String from, String to, double amount) {
         String url = BASE_URL +
@@ -38,12 +40,26 @@ public class ExchangeRateClient {
     }
 
     /**
-     * Fetch historical exchange rates (1 month)
+     * Fetch historical exchange rates for a given date range
+     *
+     * IMPORTANT:
+     * - Uses inclusive date range
+     * - Frankfurter returns business days only
      */
-    public JsonNode getHistory(String base, String target, LocalDate start, LocalDate end) {
+    public JsonNode getHistory(
+            String base,
+            String target,
+            LocalDate start,
+            LocalDate end
+    ) {
+        // Ensure valid chronological order
+        if (start.isAfter(end)) {
+            throw new IllegalArgumentException("Start date cannot be after end date");
+        }
+
         String url = BASE_URL +
-                "/" + start +
-                ".." + end +
+                "/" + start.toString() +
+                ".." + end.toString() +
                 "?from=" + base +
                 "&to=" + target;
 
@@ -58,12 +74,15 @@ public class ExchangeRateClient {
         return callApi(url);
     }
 
+    /**
+     * Internal API call handler
+     */
     private JsonNode callApi(String url) {
         try {
             String response = restTemplate.getForObject(url, String.class);
             return objectMapper.readTree(response);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to call Frankfurter API");
+            throw new RuntimeException("Failed to call Frankfurter API: " + url, e);
         }
     }
 }
