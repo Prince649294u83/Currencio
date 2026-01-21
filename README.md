@@ -79,6 +79,7 @@ This file focuses on **what the project is**, **what it does**, and **how it is 
 ---
 
 ## 📁 Project Structure
+```text
 
 Currencio/
 │
