@@ -82,57 +82,100 @@ This file focuses on **what the project is**, **what it does**, and **how it is 
 
 Currencio/
 │
-├── currency-backend/
+├── currency-backend/                         # Java Spring Boot backend
+│   │
 │   ├── src/
 │   │   └── main/
 │   │       └── java/
 │   │           └── com/
 │   │               └── example/
 │   │                   └── currency/
-│   │                       ├── controller/
+│   │                       │
+│   │                       ├── controller/  # REST API layer (HTTP endpoints)
 │   │                       │   ├── CurrencyController.java
+│   │                       │   │   └── Handles currency-related APIs
+│   │                       │   │       (/convert, /currencies, /rates/history)
+│   │                       │   │
 │   │                       │   └── HealthController.java
+│   │                       │       └── Health check endpoint (/api/health)
 │   │                       │
-│   │                       ├── service/
+│   │                       ├── service/     # Business logic layer
 │   │                       │   └── CurrencyService.java
+│   │                       │       └── Core logic for conversion, history,
+│   │                       │           and currency data processing
 │   │                       │
-│   │                       ├── client/
+│   │                       ├── client/      # External API integration
 │   │                       │   └── ExchangeRateClient.java
+│   │                       │       └── Communicates with Frankfurter API
 │   │                       │
 │   │                       └── CurrencyApplication.java
+│   │                           └── Spring Boot application entry point
 │   │
-│   └── pom.xml
+│   └── pom.xml                               # Maven configuration
+│       └── Defines dependencies, Java version,
+│           Spring Boot plugins, and build config
 │
-├── currency-frontend/
+├── currency-frontend/                        # React + TypeScript frontend
+│   │
 │   ├── src/
-│   │   ├── api/
+│   │   │
+│   │   ├── api/                              # API communication layer
 │   │   │   └── currencyApi.ts
+│   │   │       └── Centralized backend API calls
+│   │   │           (convert, currencies, history)
 │   │   │
-│   │   ├── components/
+│   │   ├── components/                       # Reusable UI components
 │   │   │   ├── ExchangeRateChart.tsx
+│   │   │   │   └── Chart.js-based line chart
+│   │   │   │       for exchange rate trends
+│   │   │   │
 │   │   │   └── LanguageSwitcher.tsx
+│   │   │       └── Dropdown to change UI language (i18n)
 │   │   │
-│   │   ├── i18n/
+│   │   ├── i18n/                             # Internationalization system
 │   │   │   ├── translations.ts
+│   │   │   │   └── All language dictionaries
+│   │   │   │       (10 supported languages)
+│   │   │   │
 │   │   │   └── useTranslate.ts
+│   │   │       └── Custom hook for translation access (t("key"))
 │   │   │
-│   │   ├── pages/
+│   │   ├── pages/                            # Page-level components
 │   │   │   └── CurrencyConverterPage.tsx
+│   │   │       └── Main dashboard page:
+│   │   │           converter, chart,
+│   │   │           time range selector,
+│   │   │           conversion history
 │   │   │
-│   │   ├── styles/
+│   │   ├── styles/                           # Global & component styles
 │   │   │   ├── app.css
+│   │   │   │   └── Layout & dashboard styles
+│   │   │   │
 │   │   │   ├── converter.css
+│   │   │   │   └── Currency converter card styling
+│   │   │   │
 │   │   │   └── theme.css
+│   │   │       └── Light/Dark theme variables
 │   │   │
-│   │   ├── App.tsx
-│   │   └── main.tsx
+│   │   ├── App.tsx                           # Root React component
+│   │   │   └── App shell, top navbar,
+│   │   │       language & theme toggle
+│   │   │
+│   │   └── main.tsx                          # Frontend entry point
+│   │       └── Mounts React app to DOM
 │   │
-│   ├── package.json
-│   └── vite.config.ts
+│   ├── package.json                          # Frontend dependencies & scripts
+│   │   └── Defines React, Chart.js, Vite, etc.
+│   │
+│   └── vite.config.ts                        # Vite build & dev server config
 │
-├── README.md
-└── RUN_PROJECT.md
-
+├── README.md                                 # Project overview & documentation
+│   └── Explains features, architecture,
+│       and project structure
+│
+└── RUN_PROJECT.md                            # Step-by-step setup & run guide
+    └── Installation requirements,
+        commands, and troubleshooting
 
 ---
 
