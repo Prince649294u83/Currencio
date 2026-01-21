@@ -2,8 +2,13 @@
  * CurrencyTypes.ts
  *
  * Central TypeScript type definitions for the Currency Converter frontend.
- * These types mirror the backend API responses exactly.
+ * These types mirror the backend API responses exactly,
+ * plus frontend-only metadata types.
  */
+
+/* ===============================
+   BACKEND RESPONSE TYPES
+   =============================== */
 
 /**
  * Result returned by GET /api/convert
@@ -38,3 +43,24 @@ export type CurrencyMap = Record<string, string>;
  * }
  */
 export type RateHistory = Record<string, number>;
+
+/* ===============================
+   FRONTEND METADATA TYPES
+   =============================== */
+
+/**
+ * Describes detailed information about a currency.
+ * This is frontend-only data (not from backend API).
+ */
+export interface CurrencyInfo {
+    code: string;          // USD
+    name: string;          // United States Dollar
+    symbol: string;        // $
+    region: string;        // United States
+    description: string;  // Short explanation
+}
+
+/**
+ * Map of currency code → currency information
+ */
+export type CurrencyInfoMap = Record<string, CurrencyInfo>;

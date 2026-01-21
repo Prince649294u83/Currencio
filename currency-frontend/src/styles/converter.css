@@ -263,3 +263,60 @@ body.dark .input-row input[readonly] {
         flex-wrap: wrap;
     }
 }
+/* ===============================
+   CURRENCY INFO SECTION
+   =============================== */
+
+.currency-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.currency-info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+}
+
+.currency-info-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.currency-info-symbol {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.currency-info-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.currency-info-region {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+}
+
+.currency-info-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+}
+
+/* ===============================
+   RESPONSIVE
+   =============================== */
+
+@media (max-width: 900px) {
+    .currency-info-grid {
+        grid-template-columns: 1fr;
+    }
+}

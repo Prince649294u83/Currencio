@@ -7,6 +7,7 @@
  * - Time range selector (5D / 1M / 6M / YTD)
  * - Exchange rate chart
  * - Conversion history table
+ * - Currency information cards (FROM + TO)
  */
 
 import { useEffect, useState } from "react";
@@ -18,6 +19,7 @@ import {
 import type { ConversionResult, CurrencyMap } from "../types/CurrencyTypes";
 import ExchangeRateChart from "../components/ExchangeRateChart";
 import { useTranslate } from "../i18n/useTranslate";
+import { currencyInfo } from "../data/currencyInfo";
 import "../styles/converter.css";
 
 /* ---------------- TYPES ---------------- */
@@ -47,10 +49,7 @@ function CurrencyConverterPage() {
     const [history, setHistory] = useState<Record<string, number>>({});
     const [range, setRange] = useState<TimeRange>("1M");
 
-    const [conversionHistory, setConversionHistory] = useState<HistoryRow[]>(
-        []
-    );
-
+    const [conversionHistory, setConversionHistory] = useState<HistoryRow[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -61,7 +60,7 @@ function CurrencyConverterPage() {
             .catch(() => setError(t("errors.loadCurrencies")));
     }, [t]);
 
-    /* ---------- LOAD RATE HISTORY ON RANGE CHANGE ---------- */
+    /* ---------- LOAD RATE HISTORY ---------- */
     useEffect(() => {
         if (!result) return;
 
@@ -125,12 +124,16 @@ function CurrencyConverterPage() {
         }
     }
 
+    /* ---------- METADATA ---------- */
+    const fromInfo = currencyInfo[fromCurrency];
+    const toInfo = currencyInfo[toCurrency];
+
     /* ---------- RENDER ---------- */
     return (
         <>
-            {/* ================= TOP DASHBOARD ================= */}
+            {/* ================= DASHBOARD ================= */}
             <div className="dashboard-wrapper">
-                {/* -------- LEFT PANEL -------- */}
+                {/* LEFT PANEL */}
                 <div className="card converter-panel">
                     <h2 className="card-title">
                         {t("title.currencyConverter")}
@@ -230,7 +233,7 @@ function CurrencyConverterPage() {
                     </button>
                 </div>
 
-                {/* -------- RIGHT PANEL -------- */}
+                {/* RIGHT PANEL */}
                 <div className="card chart-panel">
                     <div className="chart-header">
                         <h2 className="card-title">
@@ -267,6 +270,49 @@ function CurrencyConverterPage() {
                 </div>
             </div>
 
+            {/* ================= CURRENCY INFO ================= */}
+            {(fromInfo || toInfo) && (
+                <div className="currency-info-grid">
+                    {fromInfo && (
+                        <div className="currency-info-card">
+                            <div className="currency-info-header">
+                                <span className="currency-info-symbol">
+                                    {fromInfo.symbol}
+                                </span>
+                                <span className="currency-info-title">
+                                    {fromInfo.name} ({fromInfo.code})
+                                </span>
+                            </div>
+                            <div className="currency-info-region">
+                                {fromInfo.region}
+                            </div>
+                            <p className="currency-info-description">
+                                {fromInfo.description}
+                            </p>
+                        </div>
+                    )}
+
+                    {toInfo && (
+                        <div className="currency-info-card">
+                            <div className="currency-info-header">
+                                <span className="currency-info-symbol">
+                                    {toInfo.symbol}
+                                </span>
+                                <span className="currency-info-title">
+                                    {toInfo.name} ({toInfo.code})
+                                </span>
+                            </div>
+                            <div className="currency-info-region">
+                                {toInfo.region}
+                            </div>
+                            <p className="currency-info-description">
+                                {toInfo.description}
+                            </p>
+                        </div>
+                    )}
+                </div>
+            )}
+
             {/* ================= HISTORY TABLE ================= */}
             {conversionHistory.length > 0 && (
                 <div className="card history-panel">
@@ -291,7 +337,9 @@ function CurrencyConverterPage() {
                                     {row.from} → {row.to}
                                 </td>
                                 <td>{row.amount}</td>
-                                <td>{row.converted.toFixed(2)}</td>
+                                <td>
+                                    {row.converted.toFixed(2)}
+                                </td>
                             </tr>
                         ))}
                         </tbody>
